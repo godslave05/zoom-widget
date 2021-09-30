@@ -22,29 +22,33 @@ class Zoom extends StatefulWidget {
   final bool doubleTapZoom;
   final BoxShadow? canvasShadow;
   final void Function()? onTap;
+  double localTop = -100.0;
+  double localLeft = -600.0;
 
-  Zoom({
-    Key? key,
-    double? maxZoomWidth,
-    double? maxZoomHeight,
-    required this.child,
-    @Deprecated('use maxZoomWidth instead') double? width,
-    @Deprecated('use maxZoomHeight instead') double? height,
-    this.onPositionUpdate,
-    this.onScaleUpdate,
-    this.backgroundColor = Colors.grey,
-    this.canvasColor = Colors.white,
-    this.scrollWeight = 7.0,
-    this.opacityScrollBars = 0.5,
-    this.colorScrollBars = Colors.black,
-    this.centerOnScale = true,
-    this.initZoom = 1.0,
-    this.enableScroll = true,
-    this.zoomSensibility = 1.0,
-    this.doubleTapZoom = true,
-    this.canvasShadow,
-    this.onTap,
-  })  : assert(
+  Zoom(
+      {Key? key,
+      double? maxZoomWidth,
+      double? maxZoomHeight,
+      required this.child,
+      @Deprecated('use maxZoomWidth instead') double? width,
+      @Deprecated('use maxZoomHeight instead') double? height,
+      this.onPositionUpdate,
+      this.onScaleUpdate,
+      this.backgroundColor = Colors.grey,
+      this.canvasColor = Colors.white,
+      this.scrollWeight = 7.0,
+      this.opacityScrollBars = 0.5,
+      this.colorScrollBars = Colors.black,
+      this.centerOnScale = true,
+      this.initZoom = 1.0,
+      this.enableScroll = true,
+      this.zoomSensibility = 1.0,
+      this.doubleTapZoom = true,
+      this.canvasShadow,
+      this.onTap,
+      this.localTop = 0,
+      this.localLeft = 0})
+      : assert(
           maxZoomWidth != null || width != null,
           'maxZoomWidth or width must not be null',
         ),
@@ -125,6 +129,10 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
         endEscale(globalConstraints);
       }
     });
+
+    this.localTop = widget.localTop;
+    this.localLeft = widget.localLeft;
+
     super.initState();
   }
 
